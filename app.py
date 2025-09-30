@@ -102,6 +102,7 @@ if run:
                 ax.set_xlabel("Date")
                 ax.set_ylabel("Price")
                 st.pyplot(fig)
+                st.info(f"Date: {tomorrow_date}")
             else:
                 st.warning("Not enough data to predict tomorrow (need at least 60 days).")
     except Exception as e:
