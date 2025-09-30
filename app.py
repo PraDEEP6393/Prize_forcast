@@ -89,8 +89,9 @@ if run:
 
             model, scaler = load_model_and_scaler()
             tomorrow_pred = predict_tomorrow(model, scaler, df)
+            tomorrow_date = df.index[-1] + pd.Timedelta(days=1)
             if tomorrow_pred:
-                st.metric("Predicted Tomorrow Close", f"₹{tomorrow_pred:.2f}")
+                st.metric(f"Predicted Tomorrow{tomorrow_date} Close", f"₹{tomorrow_pred:.2f}")
 
                 # Plot historical close + DMAs
                 fig, ax = plt.subplots(figsize=(10,4))
@@ -98,7 +99,6 @@ if run:
                 ax.plot(df.index, df['50DMA'], linestyle='--', label='50DMA')
                 ax.plot(df.index, df['200DMA'], linestyle=':', label='200DMA')
                 tomorrow_date = df.index[-1] + pd.Timedelta(days=1)
-                #ax.scatter([tomorrow_date], [tomorrow_pred], color='red', marker='X', s=100, label='Predicted')
                 ax.legend()
                 ax.set_title(f"{ticker} Close Price & DMAs")
                 ax.set_xlabel("Date")
