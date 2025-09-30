@@ -82,7 +82,7 @@ if run:
         else:
             latest = df.iloc[-1]
             trend = detect_trend(latest)
-            st.metric("Latest Close", f"₹{latest['Close']:.2f}")
+            st.metric("Latest Close", f"₹{latest['Close'].iloc[0]:.2f}")
             st.info(f"Trend: {trend}")
 
             model, scaler = load_model_and_scaler()
