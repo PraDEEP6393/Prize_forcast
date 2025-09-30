@@ -13,7 +13,7 @@ st.set_page_config(page_title="Stock Trend Predictor", layout="wide")
 # --------------------------
 @st.cache_resource
 def load_model_and_scaler():
-    model = load_model("model.keras")  # changed from .h5
+    model = load_model("model.keras") 
     scaler = joblib.load("scaler.pkl")
     return model, scaler
 
@@ -71,18 +71,19 @@ def predict_tomorrow(model, scaler, df):
 st.title("📈 LSTM + DMA Stock Trend Predictor")
 
 ticker = st.text_input("Enter Ticker (Yahoo Finance)", value="TATAMOTORS.NS")
-period = st.selectbox("Select historical period", ["1y","2y","3y","5y","10y"], index=3)
+#period = st.selectbox("Select historical period", ["1y","2y","3y","5y","10y"], index=3)
 run = st.button("Load Data & Predict")
 
 if run:
     try:
-        df = download_stock(ticker, period=period)
+        #df = download_stock(ticker, period=period)
+        df = download_stock(ticker)
         if df.empty:
             st.error("No data found for this ticker.")
         else:
             latest = df.iloc[-1]
             trend = detect_trend(latest)
-            st.metric("Latest Close", f"₹{latest['Close'].iloc[0]:.2f}")
+            st.metric("Latest Close Prize", f"₹{latest['Close'].iloc[0]:.2f}")
             st.metric("50 DMA Prize", f"₹{latest['50DMA'].iloc[0]:.2f}")
             st.metric("200 DMA Prize", f"₹{latest['200DMA'].iloc[0]:.2f}")
             st.info(f"Trend: {trend}")
@@ -91,7 +92,7 @@ if run:
             tomorrow_pred = predict_tomorrow(model, scaler, df)
             tomorrow_date = df.index[-1] + pd.Timedelta(days=1)
             if tomorrow_pred:
-                st.metric(f"Predicted Tomorrow{tomorrow_date} Close", f"₹{tomorrow_pred:.2f}")
+                st.metric("Predicted Close Prizr of Tomorrow", f"₹{tomorrow_pred:.2f}")
 
                 # Plot historical close + DMAs
                 fig, ax = plt.subplots(figsize=(10,4))
