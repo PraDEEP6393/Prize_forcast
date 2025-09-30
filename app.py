@@ -96,7 +96,7 @@ if run:
                 ax.plot(df.index, df['50DMA'], linestyle='--', label='50DMA')
                 ax.plot(df.index, df['200DMA'], linestyle=':', label='200DMA')
                 tomorrow_date = df.index[-1] + pd.Timedelta(days=1)
-                ax.scatter([tomorrow_date], [tomorrow_pred], color='red', marker='X', s=100, label='Predicted')
+                #ax.scatter([tomorrow_date], [tomorrow_pred], color='red', marker='X', s=100, label='Predicted')
                 ax.legend()
                 ax.set_title(f"{ticker} Close Price & DMAs")
                 ax.set_xlabel("Date")
