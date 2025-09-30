@@ -83,16 +83,16 @@ if run:
         else:
             latest = df.iloc[-1]
             trend = detect_trend(latest)
-            st.metric("Latest Close Prize", f"₹{latest['Close'].iloc[0]:.2f}")
-            st.metric("50 DMA Prize", f"₹{latest['50DMA'].iloc[0]:.2f}")
-            st.metric("200 DMA Prize", f"₹{latest['200DMA'].iloc[0]:.2f}")
+            st.metric("Latest Close Price", f"₹{latest['Close'].iloc[0]:.2f}")
+            st.metric("50 DMA Price", f"₹{latest['50DMA'].iloc[0]:.2f}")
+            st.metric("200 DMA Price", f"₹{latest['200DMA'].iloc[0]:.2f}")
             st.info(f"Trend: {trend}")
 
             model, scaler = load_model_and_scaler()
             tomorrow_pred = predict_tomorrow(model, scaler, df)
             tomorrow_date = df.index[-1] + pd.Timedelta(days=1)
             if tomorrow_pred:
-                st.metric("Predicted Close Prizr of Tomorrow", f"₹{tomorrow_pred:.2f}")
+                st.metric("Predicted Close Price of Tomorrow", f"₹{tomorrow_pred:.2f}")
 
                 # Plot historical close + DMAs
                 fig, ax = plt.subplots(figsize=(10,4))
@@ -105,7 +105,7 @@ if run:
                 ax.set_xlabel("Date")
                 ax.set_ylabel("Price")
                 st.pyplot(fig)
-                st.info(f"Date: {tomorrow_date}")
+                #st.info(f"Date: {tomorrow_date}")
             else:
                 st.warning("Not enough data to predict tomorrow (need at least 60 days).")
     except Exception as e:
