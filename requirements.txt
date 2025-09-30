@@ -5,4 +5,4 @@ numpy
 scikit-learn
 joblib
 matplotlib
-tensorflow==2.12.0 
+tensorflow==2.20.0 
