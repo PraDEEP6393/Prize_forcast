@@ -83,6 +83,8 @@ if run:
             latest = df.iloc[-1]
             trend = detect_trend(latest)
             st.metric("Latest Close", f"₹{latest['Close'].iloc[0]:.2f}")
+            st.metric("50 DMA Prize", f"₹{latest['50DMA'].iloc[0]:.2f}")
+            st.metric("200 DMA Prize", f"₹{latest['200DMA'].iloc[0]:.2f}")
             st.info(f"Trend: {trend}")
 
             model, scaler = load_model_and_scaler()
