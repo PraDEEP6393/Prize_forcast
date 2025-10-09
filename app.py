@@ -52,9 +52,9 @@ def detect_trend(latest_row):
     elif dma50 > dma200 and close_price < dma50 and close_price < dma200:
         return "Weak Uptrend and chance for Trend reversal"
     elif dma50 < dma200 and close_price < dma50 and close_price < dma200:
-        return "Strong Downtrend (Strong signal for cell)"
+        return "Strong Downtrend (Strong signal for sell)"
     elif dma50 < dma200 and close_price > dma50 and close_price < dma200:
-        return "Weak Downtrend (Weak signal for cell)"
+        return "Weak Downtrend (Weak signal for sell)"
     elif dma50 < dma200 and close_price > dma50 and close_price > dma200:
         return "Weak Downtrend and chance for Trend reversal"
     else:
