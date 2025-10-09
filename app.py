@@ -6,15 +6,12 @@ from tensorflow.keras.models import load_model
 import joblib
 import matplotlib.pyplot as plt
 
-# --------------------------
 # Streamlit Configuration
-# --------------------------
 st.set_page_config(page_title="Stock Trend Predictor", layout="wide")
 st.title("📈 LSTM + DMA Stock Trend Predictor")
 
-# --------------------------
+
 # Load model and scaler dynamically
-# --------------------------
 @st.cache_resource
 def load_model_and_scaler(stock_name):
     model_scaler_paths = {
@@ -32,9 +29,7 @@ def load_model_and_scaler(stock_name):
     scaler = joblib.load(scaler_path)
     return model, scaler
 
-# --------------------------
 # Download stock data
-# --------------------------
 @st.cache_data
 def download_stock(ticker):
     df = yf.download(ticker, start="2015-01-01")
@@ -43,28 +38,31 @@ def download_stock(ticker):
     df.dropna(inplace=True)
     return df
 
-# --------------------------
+
 # Detect trend based on DMAs
-# --------------------------
 def detect_trend(latest_row):
     close_price = float(latest_row['Close'])
     dma50 = float(latest_row['50DMA'])
     dma200 = float(latest_row['200DMA'])
     
-    if dma50 > dma200 and close_price > dma50:
-        return "📈 Strong Uptrend"
-    elif dma50 > dma200 and close_price < dma50:
-        return "🟡 Weak Uptrend"
-    elif dma50 < dma200 and close_price < dma50:
-        return "📉 Strong Downtrend"
-    elif dma50 < dma200 and close_price > dma50:
-        return "🟠 Weak Downtrend"
+    if dma50 > dma200 and close_price > dma50 and close_price > dma200:
+        return "Strong Uptrend(Strong signal for buy)"
+    elif dma50 > dma200 and close_price < dma50 and close_price > dma200:
+        return "Weak Uptrend(Weak signal for buy)"
+    elif dma50 > dma200 and close_price < dma50 and close_price < dma200:
+        return "Weak Uptrend and chance for Trend reversal"
+    elif dma50 < dma200 and close_price < dma50 and close_price < dma200:
+        return "Strong Downtrend(Strong signal for cell)"
+    elif dma50 < dma200 and close_price > dma50 and close_price < dma200:
+        return "Weak Downtrend(Weak signal for cell)"
+    elif dma50 < dma200 and close_price > dma50 and close_price > dma200:
+        return "Weak Downtrend and chance for Trend reversal"
     else:
-        return "⚪ No clear trend / Possible reversal"
+        return "No clear trend"
 
-# --------------------------
+
+
 # Predict tomorrow's price
-# --------------------------
 def predict_tomorrow(model, scaler, df):
     features = ['Close', '50DMA', '200DMA']
     last_60 = df[features].tail(60)
@@ -84,9 +82,7 @@ def predict_tomorrow(model, scaler, df):
         
     return float(pred[0])
 
-# --------------------------
 # Streamlit UI
-# --------------------------
 
 # Dropdown for stock selection
 stock_name = st.selectbox(
