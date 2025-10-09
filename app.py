@@ -23,7 +23,7 @@ def load_model_and_scaler():
 @st.cache_data
 def download_stock(ticker, period="5y"):
     #df = yf.download(ticker, start="2015-01-01", end=pd.Timestamp.today().strftime('%Y-%m-%d'))
-    df = yf.download(ticker, start="2015-01-01")
+    df = yf.download(ticker, start="2015-01-01") 
     df['50DMA'] = df['Close'].rolling(window=50).mean()
     df['200DMA'] = df['Close'].rolling(window=200).mean()
     df.dropna(inplace=True)
