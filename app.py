@@ -46,15 +46,15 @@ def detect_trend(latest_row):
     dma200 = float(latest_row['200DMA'])
     
     if dma50 > dma200 and close_price > dma50 and close_price > dma200:
-        return "Strong Uptrend(Strong signal for buy)"
+        return "Strong Uptrend (Strong signal for buy)"
     elif dma50 > dma200 and close_price < dma50 and close_price > dma200:
-        return "Weak Uptrend(Weak signal for buy)"
+        return "Weak Uptrendn (Weak signal for buy)"
     elif dma50 > dma200 and close_price < dma50 and close_price < dma200:
         return "Weak Uptrend and chance for Trend reversal"
     elif dma50 < dma200 and close_price < dma50 and close_price < dma200:
-        return "Strong Downtrend(Strong signal for cell)"
+        return "Strong Downtrend (Strong signal for cell)"
     elif dma50 < dma200 and close_price > dma50 and close_price < dma200:
-        return "Weak Downtrend(Weak signal for cell)"
+        return "Weak Downtrend (Weak signal for cell)"
     elif dma50 < dma200 and close_price > dma50 and close_price > dma200:
         return "Weak Downtrend and chance for Trend reversal"
     else:
